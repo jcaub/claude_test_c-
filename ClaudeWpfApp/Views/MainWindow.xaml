@@ -1,0 +1,46 @@
+<Window x:Class="ClaudeWpfApp.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClaudeWpfApp.Views"
+        xmlns:viewmodels="clr-namespace:ClaudeWpfApp.ViewModels"
+        xmlns:views="clr-namespace:ClaudeWpfApp.Views"
+        mc:Ignorable="d"
+        Title="Application Claude WPF" Height="600" Width="900">
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewmodels:HomeViewModel}">
+            <views:HomeView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:DossierDetailViewModel}">
+            <views:DossierDetailView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:AdminViewModel}">
+            <views:AdminView />
+        </DataTemplate>
+    </Window.Resources>
+
+    <Window.DataContext>
+        <viewmodels:MainViewModel />
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Menu de navigation à gauche avec fond rouge -->
+        <StackPanel Grid.Column="0" Background="Red">
+            <TextBlock Text="MENU" FontSize="18" FontWeight="Bold" Margin="10" Foreground="White" HorizontalAlignment="Center"/>
+            <Button Content="Home" Margin="10,5" Padding="5" Command="{Binding NavigateHomeCommand}" Background="White"/>
+            <Button Content="Détail Dossier" Margin="10,5" Padding="5" Command="{Binding NavigateDossierDetailCommand}" Background="White"/>
+            <Button Content="Admin" Margin="10,5" Padding="5" Command="{Binding NavigateAdminCommand}" Background="White"/>
+            <Button Content="Déconnexion" Margin="10,5" Padding="5" Command="{Binding ExitCommand}" Background="White"/>
+        </StackPanel>
+
+        <!-- Zone de contenu à droite avec fond blanc -->
+        <ContentControl Grid.Column="1" Content="{Binding CurrentViewModel}" Background="White"/>
+    </Grid>
+</Window>
